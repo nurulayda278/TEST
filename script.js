@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Gold Price Malaysia</title>
+  <title>Harga Emas Malaysia (Demo)</title>
+
   <style>
     body {
       font-family: Arial;
@@ -26,62 +27,64 @@
 
     p {
       margin: 8px 0;
+      font-size: 16px;
+    }
+
+    .note {
+      color: #aaa;
+      font-size: 12px;
     }
   </style>
 </head>
+
 <body>
 
-<h1>💰 Harga Emas Live Malaysia</h1>
+<h1>💰 Harga Emas Malaysia (Demo Live)</h1>
 
 <div class="box">
-  <p id="999">999: loading...</p>
-  <p id="916">916: loading...</p>
-  <p id="875">875: loading...</p>
-  <p id="835">835: loading...</p>
-  <p id="750">750: loading...</p>
-  <p id="585">585: loading...</p>
+  <p id="999"></p>
+  <p id="916"></p>
+  <p id="875"></p>
+  <p id="835"></p>
+  <p id="750"></p>
+  <p id="585"></p>
 </div>
 
+<p class="note">*Data demo (tanpa API), harga auto adjust sedikit untuk simulation</p>
+
 <script>
-const API_KEY = "478409b6bf23e895e5d8bbc1a0930776";
+// ===== BASE PRICE (boleh ubah manual) =====
+// anggap harga emas 999 per gram RM
 
-// tukar ikut market (boleh adjust)
-const USD_TO_MYR = 4.70;
+let basePrice = 380; // RM per gram (999 gold)
 
-async function getGold() {
-  try {
-    const url = `https://api.metalpriceapi.com/v1/latest?api_key=${API_KEY}&base=USD&currencies=XAU`;
+function updatePrices() {
 
-    const res = await fetch(url);
-    const data = await res.json();
+  // simulate market naik turun sikit (±0.3%)
+  let fluctuation = (Math.random() - 0.5) * 2 * 0.003;
+  let price = basePrice * (1 + fluctuation);
 
-    const xau = data.rates.XAU;
+  const gold999 = price;
+  const gold916 = price * 0.916;
+  const gold875 = price * 0.875;
+  const gold835 = price * 0.835;
+  const gold750 = price * 0.750;
+  const gold585 = price * 0.585;
 
-    // 1 troy ounce = 31.1035 gram
-    const pricePerGramUSD = xau / 31.1035;
-    const pricePerGramMYR = pricePerGramUSD * USD_TO_MYR;
-
-    // mutu emas
-    const gold999 = pricePerGramMYR * 1;
-    const gold916 = pricePerGramMYR * 0.916;
-    const gold875 = pricePerGramMYR * 0.875;
-    const gold835 = pricePerGramMYR * 0.835;
-    const gold750 = pricePerGramMYR * 0.750;
-    const gold585 = pricePerGramMYR * 0.585;
-
-    document.getElementById("999").innerText = "999: RM " + gold999.toFixed(2) + " /g";
-    document.getElementById("916").innerText = "916: RM " + gold916.toFixed(2) + " /g";
-    document.getElementById("875").innerText = "875: RM " + gold875.toFixed(2) + " /g";
-    document.getElementById("835").innerText = "835: RM " + gold835.toFixed(2) + " /g";
-    document.getElementById("750").innerText = "750: RM " + gold750.toFixed(2) + " /g";
-    document.getElementById("585").innerText = "585: RM " + gold585.toFixed(2) + " /g";
-
-  } catch (err) {
-    console.log(err);
-  }
+  document.getElementById("999").innerText = "999: RM " + gold999.toFixed(2) + " /g";
+  document.getElementById("916").innerText = "916: RM " + gold916.toFixed(2) + " /g";
+  document.getElementById("875").innerText = "875: RM " + gold875.toFixed(2) + " /g";
+  document.getElementById("835").innerText = "835: RM " + gold835.toFixed(2) + " /g";
+  document.getElementById("750").innerText = "750: RM " + gold750.toFixed(2) + " /g";
+  document.getElementById("585").innerText = "585: RM " + gold585.toFixed(2) + " /g";
 }
 
-getGold();
+// first load
+updatePrices();
+
+// auto refresh setiap 3 saat
+setInterval(updatePrices, 3000);
+
 </script>
 
 </body>
