@@ -2,18 +2,19 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Gold Price</title>
+<title>Gold Dashboard</title>
 
 <style>
 body {
   margin: 0;
   font-family: Arial;
-  background: #0f0f0f;
-  color: white;
+  background: #0b0b0b;
+  color: #ddd;
 }
 
+/* soft black blur feel */
 .container {
-  max-width: 500px;
+  max-width: 550px;
   margin: auto;
   padding: 20px;
 }
@@ -26,34 +27,47 @@ h1 {
 
 h3 {
   text-align: center;
-  color: #aaa;
-  margin-bottom: 20px;
+  color: #888;
   font-weight: normal;
+  margin-bottom: 20px;
 }
 
-/* simple box */
-.box {
-  background: #1a1a1a;
-  padding: 15px;
+/* TABLE */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #141414;
   border-radius: 10px;
+  overflow: hidden;
 }
 
-.row {
-  display: flex;
-  justify-content: space-between;
-  padding: 8px 0;
-  border-bottom: 1px solid #2a2a2a;
+th, td {
+  padding: 10px;
+  border-bottom: 1px solid #222;
+  text-align: left;
 }
 
-.label {
-  color: #ddd;
+th {
+  color: gold;
+  background: #111;
 }
 
-.value {
+td {
+  color: #ccc;
+}
+
+/* BUYBACK COLOR */
+.green {
   color: #00ff88;
+  font-weight: bold;
 }
 
-/* chart */
+.red {
+  color: #ff4d4d;
+  font-weight: bold;
+}
+
+/* chart box */
 .chart {
   margin-top: 20px;
   border-radius: 10px;
@@ -66,23 +80,30 @@ h3 {
 
 <div class="container">
 
-<h1>GOLD PRICE</h1>
-<h3>Live Market (Demo + Chart)</h3>
+<h1>GOLD DASHBOARD</h1>
+<h3>Live Price + Buyback + Chart</h3>
 
-<div class="box" id="list"></div>
+<!-- TABLE -->
+<table>
+  <thead>
+    <tr>
+      <th>Purity</th>
+      <th>Price (RM/g)</th>
+      <th>Buyback</th>
+    </tr>
+  </thead>
+  <tbody id="tableBody"></tbody>
+</table>
 
-<!-- TRADING VIEW -->
+<!-- CHART -->
 <div class="chart">
-  <div class="tradingview-widget-container">
-    <iframe
-      src="https://s.tradingview.com/widgetembed/?symbol=OANDA:XAUUSD&interval=1&theme=dark"
-      width="100%"
-      height="300"
-      frameborder="0"
-      allowtransparency="true"
-      scrolling="no">
-    </iframe>
-  </div>
+  <iframe
+    src="https://s.tradingview.com/widgetembed/?symbol=OANDA:XAUUSD&interval=5&theme=dark"
+    width="100%"
+    height="320"
+    frameborder="0"
+    scrolling="no">
+  </iframe>
 </div>
 
 </div>
@@ -91,44 +112,59 @@ h3 {
 
 let basePrice = 380;
 
+// store previous buyback for compare
+let prevBuyback = {};
+
 const rates = [
   { name: "999", m: 1 },
   { name: "999.9", m: 1 },
-  { name: "916", m: 0.916 },
+  { name: "916 / 22K", m: 0.916 },
   { name: "965", m: 0.965 },
   { name: "950", m: 0.950 },
-
-  { name: "22K / BP", m: 0.916 },
   { name: "850", m: 0.850 },
-  { name: "835 / EP", m: 0.835 },
-
+  { name: "835", m: 0.835 },
   { name: "750 / 18K", m: 0.750 },
   { name: "700", m: 0.700 },
-
-  { name: "585 / EC", m: 0.585 },
+  { name: "585", m: 0.585 },
   { name: "375", m: 0.375 }
 ];
 
-function update() {
+function updateTable() {
 
-  let price = basePrice + Math.sin(Date.now()/50000)*2;
+  let price = basePrice + Math.sin(Date.now()/60000)*2;
 
   let html = "";
 
   rates.forEach(r => {
+
+    let value = price * r.m;
+
+    // BUYBACK logic (simulate slightly lower than sell price)
+    let buyback = value * 0.97;
+
+    let color = "green";
+
+    if (prevBuyback[r.name] !== undefined) {
+      if (buyback < prevBuyback[r.name]) color = "red";
+      else color = "green";
+    }
+
+    prevBuyback[r.name] = buyback;
+
     html += `
-      <div class="row">
-        <div class="label">${r.name}</div>
-        <div class="value">RM ${(price * r.m).toFixed(2)} /g</div>
-      </div>
+      <tr>
+        <td>${r.name}</td>
+        <td>RM ${value.toFixed(2)}</td>
+        <td class="${color}">RM ${buyback.toFixed(2)}</td>
+      </tr>
     `;
   });
 
-  document.getElementById("list").innerHTML = html;
+  document.getElementById("tableBody").innerHTML = html;
 }
 
-update();
-setInterval(update, 3000);
+updateTable();
+setInterval(updateTable, 3000);
 
 </script>
 
