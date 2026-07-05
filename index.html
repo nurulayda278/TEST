@@ -170,6 +170,23 @@ html+=`
 
 document.getElementById("tableBody").innerHTML=html;
 
+const now = new Date();
+
+document.getElementById("lastUpdate").innerHTML =
+"🕒 Last Update : " +
+now.toLocaleString("en-MY",{
+    timeZone:"Asia/Kuala_Lumpur",
+    year:"numeric",
+    month:"short",
+    day:"2-digit",
+    hour:"2-digit",
+    minute:"2-digit",
+    second:"2-digit",
+    hour12:false
+}) + " MYT";
+
+}
+
 }
 
 update();
