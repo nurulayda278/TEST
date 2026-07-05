@@ -1,227 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Gold Dashboard</title>
+  <meta charset="UTF-8">
+  <title>Gold Price Malaysia</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: #111;
+      color: #fff;
+      text-align: center;
+      padding: 30px;
+    }
 
-<style>
-body{
-     margin:0;
-    font-family:Arial,sans-serif;
-    color:#ddd;
-    position:relative;
+    .box {
+      background: #222;
+      padding: 20px;
+      margin: 10px auto;
+      width: 320px;
+      border-radius: 10px;
+    }
 
-    background:
-    linear-gradient(135deg,
-    #0d0d0d 0%,
-    #2b2209 25%,
-    #4b3b11 50%,
-    #1a1a1a 75%,
-    #0a0a0a 100%);
-}
+    h1 {
+      color: gold;
+    }
 
-body::before{
-    content:"";
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-
-    background:url("https://www.google.com/search?sca_esv=92ee84404c7b4ca1&sxsrf=APpeQnswtgdC60OlCLDVOUjAjjZB6A83Jw:1783260158944&udm=2&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8cqCQj_06QnZs315LoFmPf5bBLHMJ0vMQmTbuI72DM7jmWJFBVVBK15iI7JoQNn0XjQEbkOD52qIEbzukALtN40uJTH6iRXKO6cqPEC4c13ENv_QOEnfyJLzDdpmz-2WF6L04ZEOb5QFvf-gO4wGYqt6aso8lG3VckLGMmIXcWBQHC-nZTmIOPc2uENh22qACN1ZX0KQ&q=fourkay&sa=X&ved=2ahUKEwjm-cLi2buVAxV1xjgGHaq6ANUQtKgLegQIDhAB&biw=1366&bih=641&dpr=1#sv=CAMSURoyKhBlLVFRVU4zRkdUWm5KNk9NMg5RUVVOM0ZHVFpuSjZPTToOUDQxcUtITEdfOGpacU0gBCoXCgFzEhBlLVFRVU4zRkdUWm5KNk9NGAEwARgHIIemgeIKSggQARgBIAEoAQ") no-repeat center center;
-
-    background-size:350px;
-
-    opacity:0.08;
-
-    z-index:-1;
-}
-
-.container{
-    max-width:520px;
-    margin:auto;
-    padding:20px;
-}
-
-h1{
-    text-align:center;
-    color:gold;
-    margin-bottom:5px;
-}
-
-h3{
-    text-align:center;
-    color:#888;
-    font-weight:normal;
-    margin-bottom:20px;
-}
-
-/* TABLE */
-
-table{
-    width:100%;
-    border-collapse:collapse;
-    background:#141414;
-    border-radius:10px;
-    overflow:hidden;
-}
-
-th,
-td{
-    padding:14px 12px;
-    border-bottom:1px solid #222;
-    text-align:center;   /* Center semua */
-    vertical-align:middle;
-}
-
-th{
-    background:#111;
-    color:gold;
-    font-weight:bold;
-    letter-spacing:.5px;
-}
-
-tbody tr:hover{
-    background:#1b1b1b;
-}
-
-td{
-    color:#ccc;
-}
-
-/* COLORS */
-
-.green{
-    color:#00ff88;
-    font-weight:bold;
-}
-
-.red{
-    color:#ff4d4d;
-    font-weight:bold;
-}
-
-/* CHART */
-
-.chart{
-    margin-top:20px;
-    border-radius:10px;
-    overflow:hidden;
-    border:1px solid #222;
-}
-
- .last-update{
-    margin-top:15px;
-    padding:10px;
-    text-align:center;
-    color:#d4af37;
-    font-size:14px;
-    font-weight:bold;
-    background:#111;
-    border:1px solid #333;
-    border-radius:10px;
-}
-</style>
+    p {
+      margin: 8px 0;
+    }
+  </style>
 </head>
-
 <body>
 
-<div class="container">
+<h1>💰 Harga Emas Live Malaysia</h1>
 
-<h1>GOLD DASHBOARD</h1>
-<h3>Live Buyback FOURKAY</h3>
-
-<table>
-<thead>
-<tr>
-<th width="40%">Purity</th>
-<th width="60%">Buyback</th>
-</tr>
-</thead>
-
-<tbody id="tableBody"></tbody>
-</table>
-
-<div class="chart">
-<iframe
-src="https://s.tradingview.com/widgetembed/?symbol=OANDA:XAUUSD&interval=5&theme=dark&style=1"
-width="100%"
-height="350"
-frameborder="0"
-scrolling="no"
-allowtransparency="true">
-</iframe>
-</div>
-
+<div class="box">
+  <p id="999">999: loading...</p>
+  <p id="916">916: loading...</p>
+  <p id="875">875: loading...</p>
+  <p id="835">835: loading...</p>
+  <p id="750">750: loading...</p>
+  <p id="585">585: loading...</p>
 </div>
 
 <script>
+const API_KEY = "478409b6bf23e895e5d8bbc1a0930776";
 
-const rates=[
-{name:"999(Jewelry)",m:1},
-{name:"999.9",m:1.01},
-{name:"916 / 22K",m:0.916},
-{name:"965",m:0.965},
-{name:"950",m:0.950},
-{name:"850",m:0.850},
-{name:"835",m:0.835},
-{name:"750 / 18K",m:0.750},
-{name:"700",m:0.700},
-{name:"585",m:0.585},
-{name:"375",m:0.375}
-];
+// tukar ikut market (boleh adjust)
+const USD_TO_MYR = 4.70;
 
-let basePrice=480;
-let prev={};
+async function getGold() {
+  try {
+    const url = `https://api.metalpriceapi.com/v1/latest?api_key=${API_KEY}&base=USD&currencies=XAU`;
 
-function update(){
+    const res = await fetch(url);
+    const data = await res.json();
 
-let price=basePrice+Math.sin(Date.now()/60000)*2;
+    const xau = data.rates.XAU;
 
-let html="";
+    // 1 troy ounce = 31.1035 gram
+    const pricePerGramUSD = xau / 31.1035;
+    const pricePerGramMYR = pricePerGramUSD * USD_TO_MYR;
 
-rates.forEach(r=>{
+    // mutu emas
+    const gold999 = pricePerGramMYR * 1;
+    const gold916 = pricePerGramMYR * 0.916;
+    const gold875 = pricePerGramMYR * 0.875;
+    const gold835 = pricePerGramMYR * 0.835;
+    const gold750 = pricePerGramMYR * 0.750;
+    const gold585 = pricePerGramMYR * 0.585;
 
-let buyback=price*r.m*0.97;
+    document.getElementById("999").innerText = "999: RM " + gold999.toFixed(2) + " /g";
+    document.getElementById("916").innerText = "916: RM " + gold916.toFixed(2) + " /g";
+    document.getElementById("875").innerText = "875: RM " + gold875.toFixed(2) + " /g";
+    document.getElementById("835").innerText = "835: RM " + gold835.toFixed(2) + " /g";
+    document.getElementById("750").innerText = "750: RM " + gold750.toFixed(2) + " /g";
+    document.getElementById("585").innerText = "585: RM " + gold585.toFixed(2) + " /g";
 
-let color="green";
-
-if(prev[r.name]!==undefined){
-if(buyback<prev[r.name]) color="red";
+  } catch (err) {
+    console.log(err);
+  }
 }
 
-prev[r.name]=buyback;
-
-html+=`
-<tr>
-<td>${r.name}</td>
-<td class="${color}">RM ${buyback.toFixed(2)}</td>
-</tr>
-`;
-
-});
-
-document.getElementById("tableBody").innerHTML=html;
-     const now = new Date();
-
-document.getElementById("lastUpdate").innerHTML =
-"🕒 Last Update : " +
-now.toLocaleString("en-MY",{
-    timeZone:"Asia/Kuala_Lumpur",
-    year:"numeric",
-    month:"short",
-    day:"2-digit",
-    hour:"2-digit",
-    minute:"2-digit",
-    second:"2-digit",
-    hour12:false
-}) + " MYT";
-
-}
-
-update();
-setInterval(update,3000);
-
+getGold();
 </script>
 
 </body>
