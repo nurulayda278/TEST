@@ -1,0 +1,14 @@
+<div style="margin-top:15px;text-align:center;">
+    <a href="https://goldprice.org"
+       target="_blank"
+       style="
+       display:inline-block;
+       background:gold;
+       color:#111;
+       padding:12px 25px;
+       border-radius:8px;
+       text-decoration:none;
+       font-weight:bold;">
+       📈 View Live Gold Price
+    </a>
+</div>
