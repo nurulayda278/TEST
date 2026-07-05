@@ -1,4 +1,4 @@
-const API_KEY = "GET https://api.metals.dev/v1/latest
+const API_KEY = "GET https://api.metals.dev/v1/latest"
 
 {
     "status": "success",
