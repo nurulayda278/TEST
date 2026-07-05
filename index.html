@@ -1,70 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Harga Emas BUYBACK FOURKAY</title>
-
-  <style>
-    body {<!DOCTYPE html>
-<html lang="en">
-<head>
 <meta charset="UTF-8">
-<title>Gold Price Dashboard</title>
+<title>Gold Price</title>
 
+<style>
+body {
+  margin: 0;
+  font-family: Arial;
+  background: #0f0f0f;
+  color: white;
 }
 
 .container {
-  max-width: 520px;
+  max-width: 500px;
   margin: auto;
-  padding: 25px;
+  padding: 20px;
 }
 
 h1 {
   text-align: center;
-  color: #FFD700;
+  color: gold;
   margin-bottom: 5px;
-  letter-spacing: 1px;
 }
 
 h3 {
   text-align: center;
   color: #aaa;
-  font-weight: normal;
   margin-bottom: 20px;
+  font-weight: normal;
 }
 
-/* CARD */
-.card {
-  background: linear-gradient(145deg, #1c1c1c, #111);
-  border-radius: 18px;
-  padding: 20px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.6),
-              inset 0 0 0 1px rgba(255,215,0,0.08);
+/* simple box */
+.box {
+  background: #1a1a1a;
+  padding: 15px;
+  border-radius: 10px;
 }
 
-/* ROW */
 .row {
   display: flex;
   justify-content: space-between;
-  padding: 10px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
+  padding: 8px 0;
+  border-bottom: 1px solid #2a2a2a;
 }
 
 .label {
   color: #ddd;
-  font-size: 14px;
 }
 
 .value {
   color: #00ff88;
-  font-weight: bold;
 }
 
-#time {
-  text-align: center;
-  margin-top: 15px;
-  color: #888;
-  font-size: 13px;
+/* chart */
+.chart {
+  margin-top: 20px;
+  border-radius: 10px;
+  overflow: hidden;
 }
 </style>
 </head>
@@ -74,123 +67,68 @@ h3 {
 <div class="container">
 
 <h1>GOLD PRICE</h1>
-<h3>Harga Emas BUYBACK FOURKAY</h3>
+<h3>Live Market (Demo + Chart)</h3>
 
-<div class="card" id="list"></div>
+<div class="box" id="list"></div>
 
-<div id="time"></div>
+<!-- TRADING VIEW -->
+<div class="chart">
+  <div class="tradingview-widget-container">
+    <iframe
+      src="https://s.tradingview.com/widgetembed/?symbol=OANDA:XAUUSD&interval=1&theme=dark"
+      width="100%"
+      height="300"
+      frameborder="0"
+      allowtransparency="true"
+      scrolling="no">
+    </iframe>
+  </div>
+</div>
 
 </div>
 
 <script>
-let basePrice = 480;
 
-// MUTU LIST (FULL)
+let basePrice = 380;
+
 const rates = [
   { name: "999", m: 1 },
-  { name: "999.9", m: 1.000 },
+  { name: "999.9", m: 1 },
   { name: "916", m: 0.916 },
   { name: "965", m: 0.965 },
   { name: "950", m: 0.950 },
 
-  { name: "GOLD 22K", m: 0.916 },
-  { name: "GOLD BP", m: 0.916 },
+  { name: "22K / BP", m: 0.916 },
+  { name: "850", m: 0.850 },
+  { name: "835 / EP", m: 0.835 },
 
-  { name: "GOLD 850", m: 0.850 },
-  { name: "GOLD 835", m: 0.835 },
-  { name: "GOLD EP", m: 0.835 },
+  { name: "750 / 18K", m: 0.750 },
+  { name: "700", m: 0.700 },
 
-  { name: "GOLD 750", m: 0.750 },
-  { name: "GOLD 750W", m: 0.750 },
-  { name: "GOLD 700", m: 0.700 },
-
-  { name: "GOLD 585", m: 0.585 },
-  { name: "GOLD 585W", m: 0.585 },
-  { name: "GOLD EC", m: 0.585 },
-
-  { name: "GOLD 375", m: 0.375 },
-  { name: "GOLD 357W", m: 0.357 }
+  { name: "585 / EC", m: 0.585 },
+  { name: "375", m: 0.375 }
 ];
 
 function update() {
 
-  // smooth movement (tak random kasar)
-  let price = basePrice + Math.sin(Date.now() / 50000) * 2;
+  let price = basePrice + Math.sin(Date.now()/50000)*2;
 
   let html = "";
 
   rates.forEach(r => {
-    let val = price * r.m;
-
     html += `
       <div class="row">
         <div class="label">${r.name}</div>
-        <div class="value">RM ${val.toFixed(2)} /g</div>
+        <div class="value">RM ${(price * r.m).toFixed(2)} /g</div>
       </div>
     `;
   });
 
   document.getElementById("list").innerHTML = html;
-  document.getElementById("time").innerText =
-    "Last update: " + new Date().toLocaleTimeString();
 }
 
 update();
 setInterval(update, 3000);
-</script>
-
-
-    
-  </style>
-</head>
-
-<body>
-
-<h1>💰 Harga Emas BUYBACK FOURKAY (Demo Live)</h1>
-
-<div class="box">
-  <p id="999"></p>
-  <p id="916"></p>
-  <p id="875"></p>
-  <p id="835"></p>
-  <p id="750"></p>
-  <p id="585"></p>
-</div>
-
-<p class="note">*Data demo (tanpa API), harga auto adjust sedikit untuk simulation</p>
-
-<script>
-// ===== BASE PRICE (boleh ubah manual) =====
-// anggap harga emas 999 per gram RM
-
-let basePrice = 380; // RM per gram (999 gold)
-
-function updatePrices() {
-
-  // simulate market naik turun sikit (±0.3%)
-  let fluctuation = (Math.random() - 0.5) * 2 * 0.003;
-  let price = basePrice * (1 + fluctuation);
-
-  const gold999 = price;
-  const gold916 = price * 0.916;
-  const gold875 = price * 0.875;
-  const gold835 = price * 0.835;
-  const gold750 = price * 0.750;
-  const gold585 = price * 0.585;
-
-  document.getElementById("999").innerText = "999: RM " + gold999.toFixed(2) + " /g";
-  document.getElementById("916").innerText = "916: RM " + gold916.toFixed(2) + " /g";
-  document.getElementById("875").innerText = "875: RM " + gold875.toFixed(2) + " /g";
-  document.getElementById("835").innerText = "835: RM " + gold835.toFixed(2) + " /g";
-  document.getElementById("750").innerText = "750: RM " + gold750.toFixed(2) + " /g";
-  document.getElementById("585").innerText = "585: RM " + gold585.toFixed(2) + " /g";
-}
-
-// first load
-updatePrices();
-
-// auto refresh setiap 3 saat
-setInterval(updatePrices, 3000);
 
 </script>
 
