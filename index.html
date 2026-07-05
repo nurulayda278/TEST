@@ -2,10 +2,151 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Harga Emas BUYBACK FOURKAY (Demo)</title>
+  <title>Harga Emas BUYBACK FOURKAY</title>
 
   <style>
-    body {
+    body {<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Gold Price Dashboard</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: radial-gradient(circle at top, #1a1a1a, #0b0b0b);
+  color: white;
+}
+
+.container {
+  max-width: 520px;
+  margin: auto;
+  padding: 25px;
+}
+
+h1 {
+  text-align: center;
+  color: #FFD700;
+  margin-bottom: 5px;
+  letter-spacing: 1px;
+}
+
+h3 {
+  text-align: center;
+  color: #aaa;
+  font-weight: normal;
+  margin-bottom: 20px;
+}
+
+/* CARD */
+.card {
+  background: linear-gradient(145deg, #1c1c1c, #111);
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6),
+              inset 0 0 0 1px rgba(255,215,0,0.08);
+}
+
+/* ROW */
+.row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.label {
+  color: #ddd;
+  font-size: 14px;
+}
+
+.value {
+  color: #00ff88;
+  font-weight: bold;
+}
+
+#time {
+  text-align: center;
+  margin-top: 15px;
+  color: #888;
+  font-size: 13px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>GOLD PRICE</h1>
+<h3>Harga Emas BUYBACK FOURKAY</h3>
+
+<div class="card" id="list"></div>
+
+<div id="time"></div>
+
+</div>
+
+<script>
+let basePrice = 480;
+
+// MUTU LIST (FULL)
+const rates = [
+  { name: "999", m: 1 },
+  { name: "999.9", m: 1.000 },
+  { name: "916", m: 0.916 },
+  { name: "965", m: 0.965 },
+  { name: "950", m: 0.950 },
+
+  { name: "GOLD 22K", m: 0.916 },
+  { name: "GOLD BP", m: 0.916 },
+
+  { name: "GOLD 850", m: 0.850 },
+  { name: "GOLD 835", m: 0.835 },
+  { name: "GOLD EP", m: 0.835 },
+
+  { name: "GOLD 750", m: 0.750 },
+  { name: "GOLD 750W", m: 0.750 },
+  { name: "GOLD 700", m: 0.700 },
+
+  { name: "GOLD 585", m: 0.585 },
+  { name: "GOLD 585W", m: 0.585 },
+  { name: "GOLD EC", m: 0.585 },
+
+  { name: "GOLD 375", m: 0.375 },
+  { name: "GOLD 357W", m: 0.357 }
+];
+
+function update() {
+
+  // smooth movement (tak random kasar)
+  let price = basePrice + Math.sin(Date.now() / 50000) * 2;
+
+  let html = "";
+
+  rates.forEach(r => {
+    let val = price * r.m;
+
+    html += `
+      <div class="row">
+        <div class="label">${r.name}</div>
+        <div class="value">RM ${val.toFixed(2)} /g</div>
+      </div>
+    `;
+  });
+
+  document.getElementById("list").innerHTML = html;
+  document.getElementById("time").innerText =
+    "Last update: " + new Date().toLocaleTimeString();
+}
+
+update();
+setInterval(update, 3000);
+</script>
+
+</body>
+</html>
       font-family: Arial;
       background: #111;
       color: #fff;
