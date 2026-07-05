@@ -1,59 +1,95 @@
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial, Helvetica, sans-serif;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-body{
-    background:#111;
-    color:white;
+body {
+  background: radial-gradient(circle at top, #1a1a1a, #0d0d0d);
+  color: white;
 }
 
-.container{
-    max-width:450px;
-    margin:auto;
-    padding:20px;
+/* container */
+.container {
+  max-width: 480px;
+  margin: auto;
+  padding: 25px;
 }
 
-h1{
-    text-align:center;
-    color:#FFD700;
-    margin-top:20px;
-    margin-bottom:10px;
+/* title */
+h1 {
+  text-align: center;
+  color: #FFD700;
+  margin-top: 25px;
+  margin-bottom: 8px;
+  letter-spacing: 1px;
 }
 
-h3{
-    text-align:center;
-    margin-bottom:20px;
+h3 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #bbb;
+  font-weight: normal;
 }
 
-.price-box{
-    background:#1f1f1f;
-    border-radius:15px;
-    padding:20px;
-    box-shadow:0 0 15px rgba(255,215,0,.2);
+/* main card */
+.price-box {
+  background: linear-gradient(145deg, #1c1c1c, #111);
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6),
+              inset 0 0 0 1px rgba(255,215,0,0.08);
+  border: 1px solid rgba(255,215,0,0.1);
+  backdrop-filter: blur(6px);
 }
 
-.price-box p{
-    color:#999;
-    margin-top:15px;
+/* price lines */
+.price-box p {
+  color: #aaa;
+  margin-top: 14px;
+  font-size: 15px;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  padding-bottom: 6px;
 }
 
-.price-box h2{
-    color:#00ff88;
-    margin-bottom:10px;
+/* highlight price text */
+.price-box p span {
+  color: #00ff88;
+  font-weight: bold;
 }
 
-#updateTime{
-    text-align:center;
-    margin-top:20px;
-    color:#aaa;
-    font-size:14px;
+/* section title inside box */
+.price-box h2 {
+  color: #FFD700;
+  margin-bottom: 12px;
+  font-size: 18px;
+  letter-spacing: 0.5px;
 }
 
-.tradingview-widget-container{
-    margin-top:25px;
-    border-radius:15px;
-    overflow:hidden;
+/* update time */
+#updateTime {
+  text-align: center;
+  margin-top: 18px;
+  color: #888;
+  font-size: 13px;
+}
+
+/* chart widget */
+.tradingview-widget-container {
+  margin-top: 25px;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+  border: 1px solid rgba(255,215,0,0.08);
+}
+
+/* hover effect (optional premium feel) */
+.price-box:hover {
+  transform: translateY(-2px);
+  transition: 0.3s ease;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.7),
+              inset 0 0 0 1px rgba(255,215,0,0.15);
 }
