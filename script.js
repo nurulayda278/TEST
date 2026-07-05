@@ -1,4 +1,4 @@
-const API_KEY = "YOUR_GOLDAPI_KEY_HERE";
+const API_KEY = "YOUR_GOLDAPI_KEY";
 
 async function getGoldPrice() {
   try {
@@ -11,15 +11,21 @@ async function getGoldPrice() {
 
     const data = await response.json();
 
-    console.log("Gold Price Data:", data);
-
-    // contoh ambil data penting
-    console.log("Price per ounce:", data.price);
-    console.log("Price per gram 24K:", data.price_gram_24k);
+    return {
+      usd_per_oz: data.price,
+      myr_per_gram_24k: data.price_gram_24k,
+      myr_per_gram_22k: data.price_gram_22k,
+      myr_per_gram_21k: data.price_gram_21k,
+      myr_per_gram_20k: data.price_gram_20k,
+      myr_per_gram_18k: data.price_gram_18k,
+      change: data.ch,
+      change_percent: data.chp,
+      bid: data.bid,
+      ask: data.ask
+    };
 
   } catch (error) {
-    console.error("Error fetch gold price:", error);
+    console.error("Gold API error:", error);
+    return null;
   }
 }
-
-getGoldPrice();
