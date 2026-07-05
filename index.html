@@ -6,9 +6,10 @@
 
 <style>
 body{
-    margin:0;
+     margin:0;
     font-family:Arial,sans-serif;
     color:#ddd;
+    position:relative;
 
     background:
     linear-gradient(135deg,
@@ -17,6 +18,23 @@ body{
     #4b3b11 50%,
     #1a1a1a 75%,
     #0a0a0a 100%);
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+
+    background:url("4K FINAL LOGO_page-0001.png") no-repeat center center;
+
+    background-size:350px;
+
+    opacity:0.08;
+
+    z-index:-1;
 }
 
 .container{
