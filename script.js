@@ -1,4 +1,4 @@
-const API_KEY = "478409b6bf23e895e5d8bbc1a0930776";
+const API_KEY = "https://api.metalpriceapi.com/v1/latest ?api_key=478409b6bf23e895e5d8bbc1a0930776 &base=USD &currencies=EUR,XAU,XAG";
 
 async function getGoldPrice() {
   try {
