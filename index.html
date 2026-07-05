@@ -1,67 +1,88 @@
 <!DOCTYPE html>
-<html lang="ms">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>Gold Price Malaysia</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: #111;
+      color: #fff;
+      text-align: center;
+      padding: 30px;
+    }
 
-<title>Fourkay Gold Live Buyback</title>
+    .box {
+      background: #222;
+      padding: 20px;
+      margin: 10px auto;
+      width: 320px;
+      border-radius: 10px;
+    }
 
-<link rel="stylesheet" href="style.css">
+    h1 {
+      color: gold;
+    }
 
-<script src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
-{
-"symbol":"OANDA:XAUUSD",
-"width":"100%",
-"height":"220",
-"locale":"en",
-"dateRange":"1D",
-"colorTheme":"dark",
-"isTransparent":false,
-"autosize":true,
-"largeChartUrl":""
-}
-</script>
-
+    p {
+      margin: 8px 0;
+    }
+  </style>
 </head>
-
 <body>
 
-<div class="container">
+<h1>💰 Harga Emas Live Malaysia</h1>
 
-<h1>FOURKAY GOLD</h1>
-
-<h3>LIVE BUYBACK PRICE</h3>
-
-<div class="price-box">
-
-<p>999</p>
-<h2 id="gold999">Loading...</h2>
-
-<p>916</p>
-<h2 id="gold916">Loading...</h2>
-
-<p>875</p>
-<h2 id="gold875">Loading...</h2>
-
-<p>835</p>
-<h2 id="gold835">Loading...</h2>
-
-<p>750</p>
-<h2 id="gold750">Loading...</h2>
-
+<div class="box">
+  <p id="999">999: loading...</p>
+  <p id="916">916: loading...</p>
+  <p id="875">875: loading...</p>
+  <p id="835">835: loading...</p>
+  <p id="750">750: loading...</p>
+  <p id="585">585: loading...</p>
 </div>
 
-<p id="updateTime">
-Updating...
-</p>
+<script>
+const API_KEY = "478409b6bf23e895e5d8bbc1a0930776";
 
-<div class="tradingview-widget-container">
-<div id="tradingview"></div>
-</div>
+// tukar ikut market (boleh adjust)
+const USD_TO_MYR = 4.70;
 
-</div>
+async function getGold() {
+  try {
+    const url = `https://api.metalpriceapi.com/v1/latest?api_key=${API_KEY}&base=USD&currencies=XAU`;
 
-<script src="script.js"></script>
+    const res = await fetch(url);
+    const data = await res.json();
+
+    const xau = data.rates.XAU;
+
+    // 1 troy ounce = 31.1035 gram
+    const pricePerGramUSD = xau / 31.1035;
+    const pricePerGramMYR = pricePerGramUSD * USD_TO_MYR;
+
+    // mutu emas
+    const gold999 = pricePerGramMYR * 1;
+    const gold916 = pricePerGramMYR * 0.916;
+    const gold875 = pricePerGramMYR * 0.875;
+    const gold835 = pricePerGramMYR * 0.835;
+    const gold750 = pricePerGramMYR * 0.750;
+    const gold585 = pricePerGramMYR * 0.585;
+
+    document.getElementById("999").innerText = "999: RM " + gold999.toFixed(2) + " /g";
+    document.getElementById("916").innerText = "916: RM " + gold916.toFixed(2) + " /g";
+    document.getElementById("875").innerText = "875: RM " + gold875.toFixed(2) + " /g";
+    document.getElementById("835").innerText = "835: RM " + gold835.toFixed(2) + " /g";
+    document.getElementById("750").innerText = "750: RM " + gold750.toFixed(2) + " /g";
+    document.getElementById("585").innerText = "585: RM " + gold585.toFixed(2) + " /g";
+
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+getGold();
+</script>
 
 </body>
 </html>
