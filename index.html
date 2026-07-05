@@ -2,19 +2,18 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Gold Dashboard</title>
+<title>Gold Live Dashboard</title>
 
 <style>
 body {
   margin: 0;
   font-family: Arial;
-  background: #0b0b0b;
+  background: #0a0a0a;
   color: #ddd;
 }
 
-/* soft black blur feel */
 .container {
-  max-width: 550px;
+  max-width: 520px;
   margin: auto;
   padding: 20px;
 }
@@ -44,19 +43,18 @@ table {
 th, td {
   padding: 10px;
   border-bottom: 1px solid #222;
-  text-align: left;
 }
 
 th {
-  color: gold;
   background: #111;
+  color: gold;
 }
 
 td {
   color: #ccc;
 }
 
-/* BUYBACK COLOR */
+/* PRICE COLORS */
 .green {
   color: #00ff88;
   font-weight: bold;
@@ -67,7 +65,7 @@ td {
   font-weight: bold;
 }
 
-/* chart box */
+/* CHART */
 .chart {
   margin-top: 20px;
   border-radius: 10px;
@@ -81,9 +79,8 @@ td {
 <div class="container">
 
 <h1>GOLD DASHBOARD</h1>
-<h3>Live Price + Buyback + Chart</h3>
+<h3>Live Price (Demo Stable)</h3>
 
-<!-- TABLE -->
 <table>
   <thead>
     <tr>
@@ -95,7 +92,7 @@ td {
   <tbody id="tableBody"></tbody>
 </table>
 
-<!-- CHART -->
+<!-- LIVE CHART -->
 <div class="chart">
   <iframe
     src="https://s.tradingview.com/widgetembed/?symbol=OANDA:XAUUSD&interval=5&theme=dark"
@@ -110,11 +107,7 @@ td {
 
 <script>
 
-let basePrice = 380;
-
-// store previous buyback for compare
-let prevBuyback = {};
-
+// ===== FIXED MUTU (NO CHANGE) =====
 const rates = [
   { name: "999", m: 1 },
   { name: "999.9", m: 1 },
@@ -129,33 +122,44 @@ const rates = [
   { name: "375", m: 0.375 }
 ];
 
-function updateTable() {
+let basePrice = 380;
 
-  let price = basePrice + Math.sin(Date.now()/60000)*2;
+// simpan previous value
+let prevPrice = {};
+
+function update() {
+
+  // smooth movement (tak extreme)
+  let price = basePrice + Math.sin(Date.now() / 60000) * 2;
 
   let html = "";
 
   rates.forEach(r => {
 
     let value = price * r.m;
-
-    // BUYBACK logic (simulate slightly lower than sell price)
     let buyback = value * 0.97;
 
-    let color = "green";
+    // DEFAULT color
+    let priceColor = "green";
+    let buyColor = "green";
 
-    if (prevBuyback[r.name] !== undefined) {
-      if (buyback < prevBuyback[r.name]) color = "red";
-      else color = "green";
+    // compare previous price
+    if (prevPrice[r.name]) {
+      if (value < prevPrice[r.name]) priceColor = "red";
+      else priceColor = "green";
+
+      if (buyback < prevPrice[r.name + "_b"]) buyColor = "red";
+      else buyColor = "green";
     }
 
-    prevBuyback[r.name] = buyback;
+    prevPrice[r.name] = value;
+    prevPrice[r.name + "_b"] = buyback;
 
     html += `
       <tr>
         <td>${r.name}</td>
-        <td>RM ${value.toFixed(2)}</td>
-        <td class="${color}">RM ${buyback.toFixed(2)}</td>
+        <td class="${priceColor}">RM ${value.toFixed(2)}</td>
+        <td class="${buyColor}">RM ${buyback.toFixed(2)}</td>
       </tr>
     `;
   });
@@ -163,8 +167,8 @@ function updateTable() {
   document.getElementById("tableBody").innerHTML = html;
 }
 
-updateTable();
-setInterval(updateTable, 3000);
+update();
+setInterval(update, 3000);
 
 </script>
 
