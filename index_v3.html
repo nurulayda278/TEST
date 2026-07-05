@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'>
+<title>Gold Dashboard</title>
+<style>
+body{margin:0;background:#0b0b0b;font-family:Arial;color:#fff}
+.box{max-width:980px;margin:20px auto;padding:20px;background:#151515;border:2px solid #d4af37;border-radius:14px;box-shadow:0 0 20px rgba(212,175,55,.35)}
+h1{color:#d4af37;text-align:center}h2{text-align:center;color:#fff}
+table{width:100%;border-collapse:collapse;margin:18px 0}
+th,td{text-align:center;padding:12px;border-bottom:1px solid #333}
+th{background:#d4af37;color:#000}
+.green{color:#00ff88}.red{color:#ff6666}
+#last{text-align:center;color:#d4af37;margin-top:12px}
+</style></head><body>
+<div class="box">
+<h1>GOLD DASHBOARD</h1>
+<h2>Live Buyback Price</h2>
+<table><thead><tr><th>Purity</th><th>Buyback</th></tr></thead><tbody id="tb"></tbody></table>
+
+<div class="tradingview-widget-container">
+<div id="tv_chart"></div>
+<script src="https://s3.tradingview.com/tv.js"></script>
+<script>
+new TradingView.widget({
+autosize:true,
+symbol:"OANDA:XAUUSD",
+interval:"15",
+timezone:"Asia/Kuala_Lumpur",
+theme:"dark",
+style:"1",
+locale:"en",
+container_id:"tv_chart"
+});
+</script>
+</div>
+
+<div id="last">Loading...</div>
+</div>
+<script>
+const rates=[["999",1],["999.9",1.01],["916 / 22K",.916],["965",.965],["950",.95],["850",.85],["835",.835],["750 / 18K",.75],["700",.7],["585",.585],["375",.375]];
+let base=380,prev={};
+function draw(){
+let p=base+Math.sin(Date.now()/60000)*2,s="";
+for(const [n,m] of rates){
+let b=p*m*.97,c="green";if(prev[n]!=null&&b<prev[n])c="red";prev[n]=b;
+s+=`<tr><td>${n}</td><td class="${c}">RM ${b.toFixed(2)}</td></tr>`;
+}
+tb.innerHTML=s;
+last.textContent="🕒 Last Update : "+new Date().toLocaleString("en-MY",{timeZone:"Asia/Kuala_Lumpur",hour12:false})+" MYT";
+}
+draw();setInterval(draw,3000);
+</script></body></html>
